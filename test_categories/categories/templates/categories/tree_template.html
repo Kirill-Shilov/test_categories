@@ -1,0 +1,34 @@
+{% extends 'categories/layout.html' %}
+
+{% block content %}
+    {% load mptt_tags %}
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    {% for category, structure in cat_tree|tree_info %}
+        {% if structure.new_level %}<ul><li class="category">{% else %}</li><li class="category">{% endif %}
+            {% with products=category.get_all_products %}
+                {{ category.name }} ({{ products|length }})
+                {% if products %}
+                    <ul>
+                        {% for product in products %}
+                            <li class="product">{{ product.name }} (${{product.c }})</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        {% for level in structure.closed_levels %}</li></ul>{% endfor %}
+    {% endfor %}
+
+    <style>
+        .category {
+            color: blue;
+            font-weight: bold;
+        }
+        .product {
+            color: green;
+            font-weight: normal;
+        }
+    </style>
+{% endblock %}
