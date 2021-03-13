@@ -126,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SHELL_PLUS = 'bpython'
+
+SHELL_PLUS_PRINT_SQL = True
