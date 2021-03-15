@@ -1,7 +1,7 @@
 from django.shortcuts import render
 #from filters import ProductFilter
 from .models import Category, Product
-from .filters import ProductFilter, get_queryset_descendants
+from .filters import ProductFilter
 
 
 def index(request):
@@ -12,9 +12,12 @@ def index(request):
 
 
 def category(request, slug):
-    current_category = Category.objects.get(slug=slug).get_descendants(include_self=False)
-    qs = get_queryset_descendants(current_category)
-    f = ProductFilter(request.GET, queryset=Product.objects.filter(category=current_category))
+    # category based on url
+    current_category = Category.objects.get(slug=slug)
+    # category tree
+    qs = current_category.get_descendants(include_self=False)
+    # products in child categories include current category
+    f = ProductFilter(request.GET, queryset=Product.objects.filter(category__in=current_category.get_descendants(include_self=True)))
     return render(request, 'categories/category.html', {
         'category_tree': qs,
         'filter': f

@@ -5,7 +5,7 @@
     {% for category, structure in category_tree|tree_info %}
         {% if structure.new_level %}<ul><li class="category">{% else %}</li><li class="category">{% endif %}
             {% with products=category.get_all_products %}
-            <a href={{ request.build_absolute_uri }}{{ category.slug }} >{{ category.name }}</a> ({{ products|length }})
+            <a href=http://{{ request.META.HTTP_HOST }}/{{ category.slug }} >{{ category.name }}</a> ({{ products|length }})
             {% endwith %}
         {% for level in structure.closed_levels %}</li></ul>{% endfor %}
     {% endfor %}

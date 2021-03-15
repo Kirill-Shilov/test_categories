@@ -7,7 +7,7 @@ from django.utils.text import slugify
 class Category(MPTTModel):
     name = models.CharField(max_length=255, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -27,10 +27,11 @@ class Category(MPTTModel):
         return Product.objects.filter(category__in=self.get_descendants(include_self=True))
 
 
+
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
     category = TreeForeignKey('Category', on_delete=models.CASCADE, null=True, blank=True)
-    slug = models.SlugField(max_length=255, unique=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     a = models.CharField(max_length=50)
     b = models.CharField(max_length=50)
     c = models.IntegerField()
