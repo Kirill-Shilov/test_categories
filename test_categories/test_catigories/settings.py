@@ -76,15 +76,14 @@ WSGI_APPLICATION = 'test_catigories.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tst_categories',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'develpass123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
